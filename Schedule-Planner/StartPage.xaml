@@ -1,0 +1,75 @@
+﻿<Page x:Class="Schedule_Planner.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Schedule_Planner"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      FontSize="20"
+        Title="Module Study Planner" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" 
+                   Margin="0,0,0,40"
+                   Text="Semester Details"
+                   FontSize="36" Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"/>
+
+        <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Column="0"
+                       Text="Start Date:"
+                       FontWeight="Bold" FontSize="20"
+                       HorizontalAlignment="Right"
+                       Margin="10,10"/>
+            <DatePicker Name="startDatePicker"
+                        Grid.Column="1"  Margin="10,10"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="End Date:"
+                       FontWeight="Bold" FontSize="20"
+                       HorizontalAlignment="Right"
+                       Margin="10,10"/>
+            <DatePicker Name="endDatePicker"
+                        Grid.Column="1" Grid.Row="1" Margin="10,10"/>
+
+            <Button Grid.ColumnSpan="2" Grid.Row="2"
+                    Height="40" Width="150"
+                    Margin="0,50,0,20"
+                    Content="Submit"
+                    Click="Button_Click"/>
+
+            <TextBlock Grid.ColumnSpan="2" Grid.Row="3"
+                       Name="errorText"
+                       HorizontalAlignment="Center"
+                       Text=""
+                       Foreground="#FFCB1515"/>
+
+        </Grid>
+    </Grid>
+</Page>
