@@ -31,6 +31,14 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <Rectangle Grid.Row="0" Grid.Column="0"
+                       Grid.ColumnSpan="5" Grid.RowSpan="10"
+                       Fill="#C9A690"/>
+        <Rectangle Grid.Row="0" Grid.Column="0"
+                   Grid.ColumnSpan="5" Grid.RowSpan="10"
+                   Margin="5,0"
+                   Fill="#FFEECF"/>
+
         <TextBlock Grid.Column="1" Grid.Row="1"
                    Text="Semester Manager" FontSize="28"
                    Name="textbox"/>
@@ -42,19 +50,25 @@
         <TextBlock Grid.Column="1" Grid.Row="2"
                    Text="Modules"/>
 
-        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" x:Name="moduleListBox" Height="320" Width="600">
+        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" x:Name="moduleListBox" Height="320" Width="600" Background="#FFEEDF" BorderBrush="#C9A690" BorderThickness="3">
             
         </ListBox>
 
         <Button x:Name="addModuleButton" Grid.Column="2" Grid.Row="3"
                 Content="Add Module" Margin="10,5" Height="50"
-                Click="addClick"/>
+                Click="addClick"
+                Background="#FFEEDF" BorderBrush="#C9A690"
+                BorderThickness="3"/>
         <Button x:Name="removeModuleButton" Grid.Column="2" Grid.Row="4"
                 Content="Remove Module" Margin="10,5" Height="50"
-                Click="rmvClick"/>
+                Click="rmvClick"
+                Background="#FFEEDF" BorderBrush="#C9A690"
+                BorderThickness="3"/>
         <Button x:Name="manageModuleButton" Grid.Column="2" Grid.Row="5"
                 Content="Add Study Hours" Margin="10,5" Height="50"
-                Click="addStudy"/>
+                Click="addStudy"
+                Background="#FFEEDF" BorderBrush="#C9A690"
+                BorderThickness="3"/>
 
     </Grid>
 </Page>

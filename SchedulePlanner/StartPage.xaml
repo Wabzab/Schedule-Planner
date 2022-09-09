@@ -10,9 +10,9 @@
         Title="Module Study Planner" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
@@ -23,10 +23,22 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <Image Source="C:\Users\pater\OneDrive - ADvTECH Ltd\Year 2 - Sem 2\PROG 2B\POE\Schedule-Planner\SchedulePlanner\images\desk-notebook-writing-work-table.png"
+               Grid.ColumnSpan="3" Grid.RowSpan="6"
+               Height="500"/>
+
+        <Rectangle Grid.Row="0" Grid.Column="1"
+                       Grid.ColumnSpan="1" Grid.RowSpan="6"
+                       Fill="#C9A690"/>
+        <Rectangle Grid.Row="0" Grid.Column="1"
+                   Grid.ColumnSpan="1" Grid.RowSpan="6"
+                   Margin="5,0"
+                   Fill="#FFEECF"/>
+
         <TextBlock Grid.Row="1" Grid.Column="1" 
                    Margin="0,0,0,40"
                    Text="Semester Details"
-                   FontSize="36" Grid.ColumnSpan="2"
+                   FontSize="36" Grid.ColumnSpan="1"
                    HorizontalAlignment="Center"/>
 
         <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center">
@@ -62,7 +74,9 @@
                     Height="40" Width="150"
                     Margin="0,50,0,20"
                     Content="Submit"
-                    Click="Button_Click"/>
+                    Click="Button_Click"
+                    Background="#FFEEDF" BorderBrush="#C9A690"
+                    BorderThickness="3"/>
 
             <TextBlock Grid.ColumnSpan="2" Grid.Row="3"
                        Name="errorText"

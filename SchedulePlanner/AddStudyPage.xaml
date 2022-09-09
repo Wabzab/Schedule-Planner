@@ -27,6 +27,7 @@
 
         <Image Source="C:\Users\pater\OneDrive - ADvTECH Ltd\Year 2 - Sem 2\PROG 2B\POE\Schedule-Planner\SchedulePlanner\images\Library-HD-Background.png"
                Grid.ColumnSpan="3" Grid.RowSpan="6"/>
+
         <Rectangle Grid.Row="0" Grid.Column="1"
                        Grid.ColumnSpan="1" Grid.RowSpan="6"
                        Fill="#C9A690"/>
@@ -82,12 +83,16 @@
                     x:Name="submitStudy" Grid.ColumnSpan="2"
                     Content="Submit" FontSize="24"
                     Margin="10"
-                    Click="submitStudy_Click"/>
+                    Click="submitStudy_Click"
+                    Background="#FFEEDF" BorderBrush="#C9A690"
+                    BorderThickness="3"/>
             <Button Grid.Row="6" Grid.Column="0"
                     x:Name="cancel" Grid.ColumnSpan="2"
                     Content="Cancel" FontSize="22"
                     Margin="10,5,10,10"
-                    Click="cancel_Click"/>
+                    Click="cancel_Click"
+                    Background="#FFEEDF" BorderBrush="#C9A690"
+                    BorderThickness="3"/>
 
         </Grid>
     </Grid>
