@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Schedule_Planner
+namespace SchedulePlanner
 {
     /// <summary>
     /// Interaction logic for StartPage.xaml
@@ -48,7 +48,9 @@ namespace Schedule_Planner
             }
 
             // Get the number of weeks and navigate to main page
+#pragma warning disable CS8629 // Nullable value type may be null.
             numWeeks = (int)((TimeSpan)(endDate.SelectedDate - startDate.SelectedDate)).TotalDays / 7;
+#pragma warning restore CS8629 // Nullable value type may be null.
             SemesterManager sm = new SemesterManager(numWeeks);
             this.NavigationService.Navigate(sm);
         }
