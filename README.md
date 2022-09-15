@@ -9,8 +9,8 @@ WPF application for managing self-study hours for modules in a semester.
 
 ## Compiling
 Using an IDE, such as Visual Studio, makes this process simple.
-Visual Studio has a shortcut to build the solution: CTRL + Shift + B
-To start debugging with Visual Studio press the shortcut key: F5
+Visual Studio has a shortcut to build the solution: "CTRL + Shift + B".
+To start debugging with Visual Studio press the shortcut key: "F5".
 
 ## Contact
 Email me queries: patersonjones.max@gmail.com
