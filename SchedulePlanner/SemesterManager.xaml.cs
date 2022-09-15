@@ -55,8 +55,9 @@ namespace SchedulePlanner
             }
         }
 
-        // Button Click events
+        // --- Button Click events --- //
 
+        // Handle removal of modules
         private void rmvClick(object sender, RoutedEventArgs e)
         {
             if(moduleListBox.SelectedItem != null)
@@ -67,12 +68,14 @@ namespace SchedulePlanner
             }
         }
 
+        // Handle addition of modules
         private void addClick(object sender, RoutedEventArgs e)
         {
             AddModulePage amPage = new AddModulePage(this);
             this.NavigationService.Navigate(amPage);
         }
 
+        // Handle addition of self studying
         private void addStudy(object sender, RoutedEventArgs e)
         {
             if (moduleListBox.SelectedItem != null)

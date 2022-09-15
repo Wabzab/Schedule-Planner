@@ -22,15 +22,20 @@ namespace SchedulePlanner
     /// </summary>
     public partial class AddModulePage : Page
     {
+        // Initialise variables
         SemesterManager managementPage;
+
         public AddModulePage(SemesterManager managementPageIn)
         {
             InitializeComponent();
+            // Assign variables
             managementPage = managementPageIn;
         }
 
+        // Handle submission of module click
         private void submitModule_Click(object sender, RoutedEventArgs e)
         {
+            // Check fields are valid
             if (modName.Text.Equals(""))
             {
                 errorText.Text = "Module name must be entered!";
@@ -55,13 +60,18 @@ namespace SchedulePlanner
                 return;
             }
 
+            // Create new module object
             Module module = new Module(modCode.Text, modName.Text, double.Parse(modCredits.Text), double.Parse(modHours.Text));
+            // Access public method in MainWindow.xaml.cs
             managementPage.addModule(module);
+            // Return to prev page
             this.NavigationService.GoBack();
         }
 
+        // Handle cancel click
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
+            // Return to prev page
             this.NavigationService.GoBack();
         }
     }

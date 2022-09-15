@@ -20,6 +20,7 @@ namespace SchedulePlanner
     /// </summary>
     public partial class StartPage : Page
     {
+        // Initialise variables
         DatePicker startDate;
         DatePicker endDate;
         int numWeeks;
@@ -28,13 +29,16 @@ namespace SchedulePlanner
         public StartPage()
         {
             InitializeComponent();
+            // Assign variables
             startDate = startDatePicker;
             endDate = endDatePicker;
             ns = NavigationService.GetNavigationService(this);
         }
 
+        // Handle button click
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Check fields are valid
             if (startDate.SelectedDate == null | endDate.SelectedDate == null)
             {
                 errorText.Text = "All fields must have a value!";
@@ -47,7 +51,7 @@ namespace SchedulePlanner
                 return;
             }
 
-            // Get the number of weeks and navigate to main page
+            // Get number of weeks and navigate to main page
 #pragma warning disable CS8629 // Nullable value type may be null.
             numWeeks = (int)((TimeSpan)(endDate.SelectedDate - startDate.SelectedDate)).TotalDays / 7;
 #pragma warning restore CS8629 // Nullable value type may be null.

@@ -23,6 +23,7 @@ namespace SchedulePlanner
         public MainWindow()
         {
             InitializeComponent();
+            // Navigation frame for switching displayed page
             StartPage sp = new StartPage();
             navigationFrame.Navigate(sp);
         }
