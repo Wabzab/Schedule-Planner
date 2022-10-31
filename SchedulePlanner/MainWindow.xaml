@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchedulePlanner"
         mc:Ignorable="d" FontSize="20"
-        Title="Module Study Planner" Height="450" Width="810"
+        Title="Module Study Planner" Height="700" Width="1300"
         ResizeMode="NoResize">
     <Grid>
         <Frame x:Name="navigationFrame" NavigationUIVisibility="Hidden"/>

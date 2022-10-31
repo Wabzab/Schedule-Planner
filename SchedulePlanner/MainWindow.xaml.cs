@@ -24,8 +24,8 @@ namespace SchedulePlanner
         {
             InitializeComponent();
             // Navigation frame for switching displayed page
-            StartPage sp = new StartPage();
-            navigationFrame.Navigate(sp);
+            LoginPage lp = new LoginPage();
+            navigationFrame.Navigate(lp);
         }
     }
 }

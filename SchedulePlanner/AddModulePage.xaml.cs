@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using ModulesLibrary;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SchedulePlanner
 {
@@ -24,12 +26,16 @@ namespace SchedulePlanner
     {
         // Initialise variables
         SemesterManager managementPage;
+        int userID;
+        int weeks;
 
-        public AddModulePage(SemesterManager managementPageIn)
+        public AddModulePage(SemesterManager managementPageIn, int userId, int weeks)
         {
             InitializeComponent();
             // Assign variables
             managementPage = managementPageIn;
+            userID = userId;
+            this.weeks = weeks;
         }
 
         // Handle submission of module click
@@ -62,8 +68,32 @@ namespace SchedulePlanner
 
             // Create new module object
             Module module = new Module(modCode.Text, modName.Text, double.Parse(modCredits.Text), double.Parse(modHours.Text));
+            module.calculateSelfstudy(weeks);
             // Access public method in MainWindow.xaml.cs
             managementPage.addModule(module);
+
+            using (SqlConnection con = new SqlConnection(Properties.Settings.Default.connection_string))
+            {
+                con.Open();
+                try
+                {
+                    string sSQL = "INSERT INTO [tbl_userDetails] " +
+                                  "([userID], [moduleName], [moduleCode], [moduleCredit], [moduleHours], [studyHours], [studyHoursRemain])" +
+                                  "VALUES ('" + userID + "', '"+ module.name + "', '"+ module.code +"', '"+ (int)module.credits +"', '"+ (int)module.hours + "', '"+ (int)module.selfstudyHours + "', '"+ (int)module.selfHoursLeft +"')";
+                    
+                    SqlCommand cmd = new SqlCommand(sSQL, con);
+                    SqlDataAdapter adapter = new SqlDataAdapter();
+                    adapter.InsertCommand = cmd;
+                    adapter.InsertCommand.ExecuteNonQuery();
+                    cmd.Dispose();
+                    con.Close();
+                }
+                catch
+                {
+                    System.Diagnostics.Debug.WriteLine("Error adding new module!");
+                }
+            }
+
             // Return to prev page
             this.NavigationService.GoBack();
         }

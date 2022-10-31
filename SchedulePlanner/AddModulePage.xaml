@@ -5,9 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SchedulePlanner"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="1300"
       FontSize="20"
-      Title="Add Module" Height="450" Width="800">
+      Title="Add Module">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
 
-        <Image Source="C:\Users\pater\OneDrive - ADvTECH Ltd\Year 2 - Sem 2\PROG 2B\POE\Schedule-Planner\SchedulePlanner\images\386426-1505810737.png"
+        <Image Source="/images/386426-1505810737.png"
                Grid.ColumnSpan="3" Grid.RowSpan="6"/>
 
         <Rectangle Grid.Row="0" Grid.Column="1"
@@ -40,7 +40,7 @@
                        Text="Add Module Details"
                        HorizontalAlignment="Center"
                        FontSize="36" Grid.ColumnSpan="1"
-                       Margin="5,10,5,10"/>
+                       Margin="5,80,5,80"/>
         
         <Grid Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 // Custom Library for Modules
 using ModulesLibrary;
 
@@ -28,31 +30,21 @@ namespace SchedulePlanner
         // Smack this project in the face - XXX
 
         int numWeeks;
+        int userID;
+        string user;
+        List<Module> moduleList = new List<Module>();
 
-        // Generic collection of modules
-        List<Module> moduleList = new List<Module>() { new Module("PROG6212", "Programming 2B", 15, 5), new Module("CLDV6212", "Cloud Development 1B", 15, 5) };
-
-        public SemesterManager(int numWeeksIn)
+        public SemesterManager(int numWeeksIn, int Id, string username)
         {
             InitializeComponent();
             numWeeks = numWeeksIn;
+            userID = Id;
+            user = username;
+            userBox.Text = String.Format("User: {0}", user);
             weeksText.Text = String.Format("Weeks: {0}", numWeeks);
 
-            // LINQ query to select an existing type from moduleList //
-            var modules = moduleList.Select(
-                x => new Module(x.code, x.name, x.credits, x.hours)
-                    {
-                        name = x.name,
-                        code = x.code,
-                        selfHoursLeft = x.selfHoursLeft,
-                        selfstudyHours = x.selfstudyHours
-                    }
-                );
-            // --- End of LINQ query -- //
-            foreach (Module m in modules)
-            {
-                displayModule(m);
-            }
+            // Fetch modules stored in db
+            QueryModules(userID);
         }
 
         // --- Button Click events --- //
@@ -60,18 +52,39 @@ namespace SchedulePlanner
         // Handle removal of modules
         private void rmvClick(object sender, RoutedEventArgs e)
         {
-            if(moduleListBox.SelectedItem != null)
+            if (moduleListBox.SelectedItem != null)
             {
                 int moduleIndex = moduleListBox.SelectedIndex;
+                Module module = moduleList[moduleIndex];
                 moduleListBox.Items.RemoveAt(moduleIndex);
                 moduleList.RemoveAt(moduleIndex);
+                // remove from db
+                using (SqlConnection con = new SqlConnection(Properties.Settings.Default.connection_string))
+                {
+                    con.Open();
+                    try
+                    {
+                        string sql = "DELETE FROM [tbl_userDetails] " +
+                                     "WHERE [moduleName] = '" + module.name + "' AND [moduleCode] = '" + module.code + "'";
+                        SqlCommand command = new SqlCommand(sql, con);
+                        SqlDataAdapter adapter = new SqlDataAdapter();
+                        adapter.DeleteCommand = command;
+                        adapter.DeleteCommand.ExecuteNonQuery();
+                        command.Dispose();
+                        con.Close();
+                    }
+                    catch
+                    {
+                        System.Diagnostics.Debug.WriteLine("Error removing module!");
+                    }
+                }
             }
         }
 
         // Handle addition of modules
         private void addClick(object sender, RoutedEventArgs e)
         {
-            AddModulePage amPage = new AddModulePage(this);
+            AddModulePage amPage = new AddModulePage(this, userID, numWeeks);
             this.NavigationService.Navigate(amPage);
         }
 
@@ -98,7 +111,28 @@ namespace SchedulePlanner
         {
             // Updates an existing module
             Module module = moduleList[index];
-            module.selfHoursLeft -= hours;
+
+            using (SqlConnection con = new SqlConnection(Properties.Settings.Default.connection_string))
+            {
+                con.Open();
+                try
+                {
+                    module.selfHoursLeft = Math.Max(module.selfHoursLeft - hours, 0);
+                    string sql = "UPDATE [tbl_userDetails] " +
+                                 "SET [studyHoursRemain] = '" + module.selfHoursLeft + "'" +
+                                 "WHERE [moduleName] = '" + module.name + "' AND [moduleCode] = '" + module.code + "'";
+                    SqlCommand command = new SqlCommand(sql, con);
+                    SqlDataAdapter adapter = new SqlDataAdapter();
+                    adapter.UpdateCommand = command;
+                    adapter.UpdateCommand.ExecuteNonQuery();
+                    command.Dispose();
+                    con.Close();
+                } catch
+                {
+                    Debug.WriteLine("Error updating module!");
+                }
+                }
+
             ListBoxItem li = (ListBoxItem)moduleListBox.Items.GetItemAt(index);
             li.Content = String.Format("{0} - {1} | Study hours: {2} / {3}", module.name, module.code, (int)module.selfHoursLeft, (int)module.selfstudyHours);
         }
@@ -106,10 +140,46 @@ namespace SchedulePlanner
         private void displayModule(Module module)
         {
             // Logic for displaying a module
-            module.calculateSelfstudy(numWeeks);
             ListBoxItem listBoxItem = new ListBoxItem();
             listBoxItem.Content = String.Format("{0} - {1} | Study hours: {2} / {3}", module.name, module.code, (int)module.selfHoursLeft, (int)module.selfstudyHours);
             moduleListBox.Items.Add(listBoxItem);
+        }
+
+        private void QueryModules(int Id)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(Properties.Settings.Default.connection_string))
+                {
+                    con.Open();
+                    string sql = "select [moduleName], [moduleCode], [moduleCredit], [moduleHours], [studyHours], [studyHoursRemain] " +
+                                 "from [tbl_userDetails] " +
+                                 "where [userID] = '" + Id + "'";
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        
+                        while (dr.Read())
+                        {
+                            Debug.WriteLine(dr.FieldCount);
+                            string name = dr.GetString(0);
+                            string code = dr.GetString(1);
+                            int credit = dr.GetInt32(2);
+                            int hours = dr.GetInt32(3);
+                            int studyHours = dr.GetInt32(4);
+                            int selfHoursLeft = dr.GetInt32(5);
+                            Module m = new Module(code, name, credit, hours);
+                            m.selfstudyHours = studyHours;
+                            m.selfHoursLeft = selfHoursLeft;
+                            addModule(m);
+                        }
+                    }
+                }
+            } catch
+            {
+                Debug.WriteLine("Error fetching modules!");
+            }
         }
     }
 }

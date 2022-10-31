@@ -5,13 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SchedulePlanner"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="1300"
       FontSize="20"
       Title="SemesterManager">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
@@ -44,27 +45,31 @@
                    Name="textbox"/>
 
         <TextBlock Grid.Column="2" Grid.Row="1"
-                   FontSize="28"
+                   FontSize="28" Text="SampleUser"
+                   Name="userBox"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="1"
+                   FontSize="28" Text="100"
                    x:Name="weeksText"/>
 
         <TextBlock Grid.Column="1" Grid.Row="2"
                    Text="Modules"/>
 
-        <ListBox Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" x:Name="moduleListBox" Height="320" Width="600" Background="#FFEEDF" BorderBrush="#C9A690" BorderThickness="3">
+        <ListBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="3" x:Name="moduleListBox" Height="560" Width="1090" Background="#FFEEDF" BorderBrush="#C9A690" BorderThickness="3">
             
         </ListBox>
 
-        <Button x:Name="addModuleButton" Grid.Column="2" Grid.Row="3"
+        <Button x:Name="addModuleButton" Grid.Column="3" Grid.Row="3"
                 Content="Add Module" Margin="10,5" Height="50"
                 Click="addClick"
                 Background="#FFEEDF" BorderBrush="#C9A690"
                 BorderThickness="3"/>
-        <Button x:Name="removeModuleButton" Grid.Column="2" Grid.Row="4"
+        <Button x:Name="removeModuleButton" Grid.Column="3" Grid.Row="4"
                 Content="Remove Module" Margin="10,5" Height="50"
                 Click="rmvClick"
                 Background="#FFEEDF" BorderBrush="#C9A690"
                 BorderThickness="3"/>
-        <Button x:Name="manageModuleButton" Grid.Column="2" Grid.Row="5"
+        <Button x:Name="manageModuleButton" Grid.Column="3" Grid.Row="5"
                 Content="Add Study Hours" Margin="10,5" Height="50"
                 Click="addStudy"
                 Background="#FFEEDF" BorderBrush="#C9A690"

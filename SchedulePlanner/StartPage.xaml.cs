@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.SqlClient;
 
 namespace SchedulePlanner
 {
@@ -26,13 +27,18 @@ namespace SchedulePlanner
         int numWeeks;
         NavigationService ns;
 
-        public StartPage()
+        int id;
+        string user;
+
+        public StartPage(int Id, string User)
         {
             InitializeComponent();
             // Assign variables
             startDate = startDatePicker;
             endDate = endDatePicker;
             ns = NavigationService.GetNavigationService(this);
+            this.id = Id;
+            this.user = User;
         }
 
         // Handle button click
@@ -51,11 +57,26 @@ namespace SchedulePlanner
                 return;
             }
 
+            // Connect to DB and insert start and end date for user.
+            using (SqlConnection con = new SqlConnection(Properties.Settings.Default.connection_string))
+            {
+                con.Open();
+                string sql = "update [tbl_users] " +
+                             "set [semesterStart] = '" + startDate.SelectedDate + "', [semesterEnd] = '" + endDate.SelectedDate + "' " +
+                             "where [userID] = '" + id + "'";
+                SqlCommand command = new SqlCommand(sql, con);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.UpdateCommand = command;
+                adapter.UpdateCommand.ExecuteNonQuery();
+                command.Dispose();
+                con.Close();
+            }
+
             // Get number of weeks and navigate to main page
 #pragma warning disable CS8629 // Nullable value type may be null.
             numWeeks = (int)((TimeSpan)(endDate.SelectedDate - startDate.SelectedDate)).TotalDays / 7;
 #pragma warning restore CS8629 // Nullable value type may be null.
-            SemesterManager sm = new SemesterManager(numWeeks);
+            SemesterManager sm = new SemesterManager(numWeeks, id, user);
             this.NavigationService.Navigate(sm);
         }
     }
