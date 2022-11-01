@@ -21,6 +21,14 @@ In this page you may add new modules by selecting the 'Add module' button, which
 
 All pages that take you away from the main page (module manager or login) have a 'Cancel' button that will take you back to the previous page without saving any of the inputs made.
 
+## Changelog
+From part 1 there have been a few changes:
+  - SQL database with two tables added.
+  - App screen size increased.
+  - RSA encryption for secure storage added.
+  - 'System.Data.SqlClient' for interacting with SQL database added.
+  - New page 'Sign Up' added.
+
 ## Contact
 Email me queries: patersonjones.max@gmail.com<br>
 Find me on GitHub: https://github.com/Wabzab
