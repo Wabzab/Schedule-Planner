@@ -22,6 +22,6 @@ In this page you may add new modules by selecting the 'Add module' button, which
 All pages that take you away from the main page (module manager or login) have a 'Cancel' button that will take you back to the previous page without saving any of the inputs made.
 
 ## Contact
-Email me queries: patersonjones.max@gmail.com
+Email me queries: patersonjones.max@gmail.com<br>
 Find me on GitHub: https://github.com/Wabzab
 
